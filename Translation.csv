@@ -1,0 +1,31 @@
+keys,en,pt
+TITLE,Title,Título
+NEWGAME,New Game,Novo Jogo
+SETTINGS,Settings,Opções
+QUIT,Quit,Sair
+CREDITS,Credits:\n-x,Créditos:\n-x
+CREATOR,Creator: Noskire,Criador: Noskire
+STOPTIONS,Options,Opções
+STDISPLAYMODE,Display Mode,Modo de Exibição
+STWINDOWED,Windowed,Modo Janela
+STFULLSCREEN,FullScreen,Tela Cheia
+STBLOOM,Bloom,Bloom
+STVSYNC,VSync,VSync
+STBRIGHTNESS,Brightness,Brilho
+STLANGUAGE,Language,Idioma
+STLCHOOSE,Choose a Language,Escolha um Idioma
+STMUSIC,Master Volume,Volume Principal
+STKEYS,Keybind,Controles
+STRESET,Reset Settings,Redefinir Teclas
+STSAVE,Save Settings,Salvar Teclas
+left,Left,Esquerda
+right,Right,Direita
+jump,Jump,Pular
+pause,Pause,Pausar
+STKUNASSIGNED,Unassigned,Sem Tecla
+STKPRESSKEY,Press Any Key:,Aperte uma Tecla:
+PAUSED,Paused,Pausado
+RESUME,Resume,Retomar
+RESTART,Restart,Reiniciar
+MAINMENU,Main Menu,Menu Principal
+SEEMOREIN,See more in:,Veja mais em:

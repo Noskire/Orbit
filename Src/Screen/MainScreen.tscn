@@ -1,0 +1,148 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/Screen/MainScreen.gd" type="Script" id=1]
+[ext_resource path="res://Assets/ui_theme.tres" type="Theme" id=2]
+[ext_resource path="res://src/UserInterface/SettingsMenu.tscn" type="PackedScene" id=3]
+
+[node name="MainScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scenePath = "res://Src/Level/LevelTemplate.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.180392, 0.188235, 0.215686, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -1280.0
+margin_top = -542.378
+margin_bottom = 537.622
+color = Color( 0, 0, 0, 0.294118 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -640.0
+margin_top = -540.0
+margin_bottom = 540.0
+color = Color( 0, 0, 0, 0.294118 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1280.0
+custom_constants/margin_right = 25
+custom_constants/margin_top = 25
+custom_constants/margin_left = 25
+custom_constants/margin_bottom = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 615.0
+margin_bottom = 1055.0
+custom_constants/separation = 40
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+margin_right = 590.0
+margin_bottom = 87.0
+text = "TITLE"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="VBoxContainer" parent="Margin/VBox"]
+margin_left = 95.0
+margin_top = 127.0
+margin_right = 495.0
+margin_bottom = 438.0
+rect_min_size = Vector2( 400, 300 )
+size_flags_horizontal = 4
+custom_constants/separation = 25
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="Button" parent="Margin/VBox/Menu"]
+margin_right = 400.0
+margin_bottom = 87.0
+size_flags_vertical = 3
+text = "NEWGAME"
+
+[node name="Settings" type="Button" parent="Margin/VBox/Menu"]
+margin_top = 112.0
+margin_right = 400.0
+margin_bottom = 199.0
+size_flags_vertical = 3
+text = "SETTINGS"
+
+[node name="Quit" type="Button" parent="Margin/VBox/Menu"]
+margin_top = 224.0
+margin_right = 400.0
+margin_bottom = 311.0
+size_flags_vertical = 3
+text = "QUIT"
+
+[node name="Credits" type="Label" parent="Margin/VBox"]
+margin_top = 478.0
+margin_right = 590.0
+margin_bottom = 565.0
+text = "CREDITS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Creator" type="Label" parent="Margin/VBox"]
+margin_top = 605.0
+margin_right = 590.0
+margin_bottom = 692.0
+text = "CREATOR"
+
+[node name="VBox" type="VBoxContainer" parent="Margin/VBox"]
+margin_top = 732.0
+margin_right = 590.0
+margin_bottom = 886.0
+custom_constants/separation = -20
+
+[node name="Label" type="Label" parent="Margin/VBox/VBox"]
+margin_right = 590.0
+margin_bottom = 87.0
+text = "SEEMOREIN"
+
+[node name="Link" type="LinkButton" parent="Margin/VBox/VBox"]
+margin_top = 67.0
+margin_right = 590.0
+margin_bottom = 154.0
+text = "https://noskire.itch.io/"
+
+[node name="SettingsMenu" parent="." instance=ExtResource( 3 )]
+
+[connection signal="button_up" from="Margin/VBox/Menu/Play" to="." method="_on_Play_button_up"]
+[connection signal="button_up" from="Margin/VBox/Menu/Settings" to="." method="_on_Settings_button_up"]
+[connection signal="button_up" from="Margin/VBox/Menu/Quit" to="." method="_on_Quit_button_up"]
+[connection signal="pressed" from="Margin/VBox/VBox/Link" to="." method="_on_Link_pressed"]
