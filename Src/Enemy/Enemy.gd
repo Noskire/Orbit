@@ -14,6 +14,12 @@ var hitpoints
 var exp_points
 var damage
 
+var on_fire = false
+var wet = false
+var slowed = false
+var debuff = 0
+var debuff_slow = 0
+
 var enemy_pos = Vector2()
 var target_pos = Vector2()
 var direction = Vector2()
@@ -21,7 +27,20 @@ var direction = Vector2()
 func _ready():
 	add_to_group("Enemies")
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if debuff < 0:
+		debuff = 0
+		on_fire = false
+		wet = false
+	else:
+		debuff -= delta
+	
+	if debuff_slow < 0:
+		debuff_slow = 0
+		slowed = false
+	else:
+		debuff_slow -= delta
+	
 	enemy_pos = get_global_position()
 	if is_instance_valid(player):
 		target_pos = player.position - enemy_pos
@@ -29,16 +48,56 @@ func _physics_process(_delta: float) -> void:
 	if abs(target_pos.x) > 150 or abs(target_pos.y) > 150:
 		# Move towards player or tower?
 		direction = target_pos.normalized()
-		direction = move_and_slide(direction * speed)
+		if slowed:
+			direction = move_and_slide(direction * speed / 2)
+		else:
+			direction = move_and_slide(direction * speed)
 	elif anim.current_animation == "Idle":
 		if is_instance_valid(player):
 			player.take_damage(damage)
 			anim.play("Rest")
 
-func take_damage() -> void:
-	hitpoints -= 1
+func take_damage(dam_type: int) -> void:
+	if type == dam_type:
+		hitpoints -= 1
+	elif opposite_type(dam_type):
+		hitpoints -= 3
+	else:
+		hitpoints -= 2
+	
+	if on_fire and dam_type == 1: #water
+		hitpoints -= 1
+	if wet and dam_type == 2: #earth
+		hitpoints -= 1
+	
 	if hitpoints <= 0:
 		die()
+
+func opposite_type(dam_type) -> bool:
+	#enum types {Fire, Water, Earth, Air}
+	if (type == 0 and dam_type == 1) or (type == 1 and dam_type == 2) or (type == 2 and dam_type == 3) or (type == 3 and dam_type == 0):
+		return true
+	return false
+
+func get_on_fire(time: int):
+	if wet:
+		wet = false
+		debuff = 0
+	else:
+		on_fire = true
+		debuff = time
+
+func get_wet(time: int):
+	if on_fire:
+		on_fire = false
+		debuff = 0
+	else:
+		wet = true
+		debuff = time
+
+func get_slowed(time: int):
+	slowed = true
+	debuff_slow = time
 
 func die() -> void:
 	var exp_point = exp_path.instance()

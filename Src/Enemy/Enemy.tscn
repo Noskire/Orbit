@@ -24,6 +24,7 @@ modulate = Color( 0.701961, 0.207843, 0.207843, 1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color( 0.890196, 0.207843, 0.207843, 1 )
 shape = SubResource( 1 )
 
 [node name="SpawnPoint" type="Position2D" parent="."]

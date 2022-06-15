@@ -1,9 +1,9 @@
 extends KinematicBody2D
 
-var velocity
-var speed = 300
 var span_time = 5
-var type
+var velocity: Vector2
+var speed: int
+var type: int
 
 func _physics_process(delta):
 	span_time -= delta

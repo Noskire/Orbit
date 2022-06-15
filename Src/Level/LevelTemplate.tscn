@@ -66,7 +66,7 @@ format = 1
 position = Vector2( 960, 540 )
 
 [node name="Respawn" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 5.0
 one_shot = true
 
 [node name="Gems" type="CanvasLayer" parent="."]
@@ -79,6 +79,7 @@ margin_right = 440.0
 margin_bottom = 280.0
 custom_constants/vseparation = 10
 custom_constants/hseparation = 10
+allow_reselect = true
 auto_height = true
 max_columns = 4
 fixed_column_width = 80
@@ -99,6 +100,76 @@ margin_bottom = 20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Slots" type="VBoxContainer" parent="Gems"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -100.0
+margin_top = 30.0
+margin_right = -30.0
+margin_bottom = 220.0
+custom_constants/separation = 10
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot1" type="Panel" parent="Gems/Slots"]
+margin_top = 10.0
+margin_right = 70.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="Gem" type="TextureRect" parent="Gems/Slots/Slot1"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bar" type="ProgressBar" parent="Gems/Slots/Slot1/Gem"]
+margin_top = 30.0
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 0 )
+
+[node name="Slot2" type="Panel" parent="Gems/Slots"]
+margin_top = 70.0
+margin_right = 70.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="Gem" type="TextureRect" parent="Gems/Slots/Slot2"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 50, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bar" type="ProgressBar" parent="Gems/Slots/Slot2/Gem"]
+margin_top = 30.0
+margin_right = 50.0
+margin_bottom = 50.0
+
+[node name="Slot3" type="Panel" parent="Gems/Slots"]
+margin_top = 130.0
+margin_right = 70.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="Gem" type="TextureRect" parent="Gems/Slots/Slot3"]
+margin_right = 50.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bar" type="ProgressBar" parent="Gems/Slots/Slot3/Gem"]
+margin_top = 30.0
+margin_right = 50.0
+margin_bottom = 50.0
 
 [connection signal="timeout" from="Respawn" to="." method="_on_Respawn_timeout"]
 [connection signal="item_selected" from="Gems/Gems" to="Gems" method="_on_Gems_selected"]
