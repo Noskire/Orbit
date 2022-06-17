@@ -5,20 +5,22 @@ onready var player = get_parent().get_node("Mage")
 # types {Fire, Water, Earth, Air}
 # sizes {Small, Medium, Large}
 onready var gems_paths = [
-	preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png"),
-	preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png"),
-	preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png"),
-	preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png"), preload("res://icon.png")
+	preload("res://Assets/gem1.png"), preload("res://Assets/gem2.png"),
+	preload("res://Assets/gem3.png"), preload("res://Assets/gem4.png")
 	]
 onready var gems: ItemList = get_node("Gems")
 onready var choosedGem: TextureRect = get_node("ChoosedGem")
 onready var slot1: TextureRect = get_node("Slots/Slot1/Gem")
 onready var slot2: TextureRect = get_node("Slots/Slot2/Gem")
 onready var slot3: TextureRect = get_node("Slots/Slot3/Gem")
+onready var slot1Default = preload("res://Assets/staff.png")
+onready var slot2Default = preload("res://Assets/tower.png")
+
 var gem_id
 var slot1Gem_id
 var slot2Gem_id
 var slot3Gem_id
+var buffTower = 0
 
 enum types {Fire, Water, Earth, Air}
 var orbs_collected = []
@@ -31,25 +33,38 @@ func _ready():
 		orbs_collected.append([])
 		for y in range(diff_sizes):
 			orbs_collected[x].append(0)
-			gems.add_item(str(orbs_collected[x][y]), gems_paths[x * diff_sizes + y])
+			gems.add_item(str(orbs_collected[x][y]), gems_paths[y])
+			var idx = x * diff_sizes + y
+			match x:
+				0:
+					gems.set_item_icon_modulate(idx, "#ba0b04")
+				1:
+					gems.set_item_icon_modulate(idx, "#09c3db")
+				2:
+					gems.set_item_icon_modulate(idx, "#806043")
+				3:
+					gems.set_item_icon_modulate(idx, "#a6e7ff")
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var val = slot1.get_node("Bar").value
 	if val > 0:
 		slot1.get_node("Bar").set_value(val - 0.1)
 	else:
-		if slot1.texture != null:
-			slot1.texture = null
+		if slot1.texture != slot1Default:
+			slot1.texture = slot1Default
+			slot1.modulate = "#ffffff"
 			slot1.get_node("Bar").set_value(0)
 			player.update_staff(-1)
-	val = slot2.get_node("Bar").value
-	if val > 0:
-		slot2.get_node("Bar").set_value(val - 1)
-	else:
-		if slot2.texture != null:
-			slot2.texture = null
-			slot2.get_node("Bar").set_value(0)
-			player.update_tower(-1)
+	
+	if buffTower > 0:
+		buffTower -= delta
+		slot2.get_node("Bar").set_value(buffTower)
+	elif buffTower < 0:
+		buffTower = 0
+		slot2.texture = slot2Default
+		slot2.modulate = "#ffffff"
+		slot2.get_node("Bar").set_value(0)
+		player.update_tower(-1)
 
 func get_orb(value, type) -> void:
 	orbs_collected[type][0] += value
@@ -80,17 +95,22 @@ func _input(event):
 			else:
 				if choosedGem.texture != null:
 					if slot == 1:
-						slot1.texture = gems_paths[gem_id]
+						slot1.texture = gems_paths[gem_id % diff_sizes]
+						slot1.modulate = choosedGem.modulate
 						slot1Gem_id = gem_id
 						slot1.get_node("Bar").set_value(100)
 						player.update_staff(gem_id)
 					elif slot == 2:
-						slot2.texture = gems_paths[gem_id]
+						slot2.texture = gems_paths[gem_id % diff_sizes]
+						slot2.modulate = choosedGem.modulate
 						slot2Gem_id = gem_id
-						slot2.get_node("Bar").set_value(100)
+						buffTower = 10 + (gem_id % diff_sizes) * 10
+						slot2.get_node("Bar").set_value(buffTower)
+						slot2.get_node("Bar").set_max(buffTower)
 						player.update_tower(gem_id)
 					elif slot == 3:
-						slot3.texture = gems_paths[gem_id]
+						slot3.texture = gems_paths[gem_id % diff_sizes]
+						slot3.modulate = choosedGem.modulate
 						slot3Gem_id = gem_id
 						slot3.get_node("Bar").set_value(100)
 						level.update_strength(gem_id)
@@ -100,10 +120,10 @@ func _input(event):
 	choosedGem.set_position(get_viewport().get_mouse_position())
 
 func slot_clicked(pos: Vector2) -> int:
-	var x_area = Vector2(1830, 1880)
-	var y_area1 = Vector2(40, 90)
-	var y_area2 = Vector2(100, 150)
-	var y_area3 = Vector2(160, 210)
+	var x_area = Vector2(1820, 1884)
+	var y_area1 = Vector2(30, 113)
+	var y_area2 = Vector2(138, 221)
+	var y_area3 = Vector2(246, 329)
 	if x_area.x <= pos.x and pos.x <= x_area.y:
 		if y_area1.x <= pos.y and pos.y <= y_area1.y:
 			return 1
@@ -114,6 +134,17 @@ func slot_clicked(pos: Vector2) -> int:
 	return 0
 
 func _on_Gems_selected(index):
-	if orbs_collected[int(index / diff_sizes)][(index % diff_sizes)] != 0:
-		choosedGem.texture = gems_paths[index]
+	var type = int(index / diff_sizes)
+	var size = index % diff_sizes
+	if orbs_collected[type][size] != 0:
+		choosedGem.texture = gems_paths[size]
+		match type:
+			0:
+				choosedGem.modulate = "#ba0b04"
+			1:
+				choosedGem.modulate = "#09c3db"
+			2:
+				choosedGem.modulate = "#806043"
+			3:
+				choosedGem.modulate = "#a6e7ff"
 		gem_id = index

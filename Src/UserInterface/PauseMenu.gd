@@ -8,18 +8,18 @@ export(String, FILE) var mainenu_scene_path: = ""
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		if pauseOverlay.visible: # Paused
+		if visible: # Paused
 			sceneTree.paused = false
-			pauseOverlay.visible = false
+			visible = false
 		else:
 			sceneTree.paused = true
-			pauseOverlay.visible = true
+			visible = true
 			$PauseOverlay/VBox/Resume.grab_focus()
 		sceneTree.set_input_as_handled()
 
 func _on_Resume_button_up():
 	sceneTree.paused = false
-	pauseOverlay.visible = false
+	visible = false
 
 func _on_Restart_button_up():
 	sceneTree.paused = false

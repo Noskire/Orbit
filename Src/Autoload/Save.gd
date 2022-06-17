@@ -4,9 +4,6 @@ const SAVEFILE = "user://saveFile.save"
 const SAVEKEYS = "user://keyBinds.ini"
 
 var standard_keybinds = {
-	"right": 68,
-	"left": 65,
-	"jump": 32,
 	"pause": 82
 }
 

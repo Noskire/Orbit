@@ -2,8 +2,11 @@ extends KinematicBody2D
 class_name Enemy
 
 onready var player: Node2D = get_parent().get_node("Mage")
+onready var hp: ProgressBar = get_node("HP")
+onready var ionfire: Sprite = get_node("ionfire")
+onready var iwet: Sprite = get_node("iwet")
+onready var islow: Sprite = get_node("islow")
 onready var anim: AnimationPlayer = get_node("AnimationPlayer")
-onready var spawn: Position2D = get_node("SpawnPoint")
 onready var projectile_path = preload("res://Src/Enemy/Projectile.tscn")
 onready var exp_path = preload("res://Src/Enemy/ExpPoint.tscn")
 
@@ -28,18 +31,21 @@ func _ready():
 	add_to_group("Enemies")
 
 func _physics_process(delta: float) -> void:
-	if debuff < 0:
+	if debuff > 0:
+		debuff -= delta
+	elif debuff < 0:
 		debuff = 0
 		on_fire = false
 		wet = false
-	else:
-		debuff -= delta
+		ionfire.set_visible(false)
+		iwet.set_visible(false)
 	
-	if debuff_slow < 0:
+	if debuff_slow > 0:
+		debuff_slow -= delta
+	elif debuff_slow < 0:
 		debuff_slow = 0
 		slowed = false
-	else:
-		debuff_slow -= delta
+		islow.set_visible(false)
 	
 	enemy_pos = get_global_position()
 	if is_instance_valid(player):
@@ -61,7 +67,7 @@ func take_damage(dam_type: int) -> void:
 	if type == dam_type:
 		hitpoints -= 1
 	elif opposite_type(dam_type):
-		hitpoints -= 3
+		hitpoints -= 4
 	else:
 		hitpoints -= 2
 	
@@ -70,6 +76,7 @@ func take_damage(dam_type: int) -> void:
 	if wet and dam_type == 2: #earth
 		hitpoints -= 1
 	
+	hp.value = hitpoints
 	if hitpoints <= 0:
 		die()
 
@@ -82,22 +89,21 @@ func opposite_type(dam_type) -> bool:
 func get_on_fire(time: int):
 	if wet:
 		wet = false
-		debuff = 0
-	else:
-		on_fire = true
-		debuff = time
+	on_fire = true
+	debuff = time
+	ionfire.set_visible(true)
 
 func get_wet(time: int):
 	if on_fire:
 		on_fire = false
-		debuff = 0
-	else:
-		wet = true
-		debuff = time
+	wet = true
+	debuff = time
+	iwet.set_visible(true)
 
 func get_slowed(time: int):
 	slowed = true
 	debuff_slow = time
+	islow.set_visible(true)
 
 func die() -> void:
 	var exp_point = exp_path.instance()
@@ -105,6 +111,7 @@ func die() -> void:
 	exp_point.position = global_position
 	exp_point.value = exp_points
 	exp_point.type = type
+	exp_point.modulate = $Sprite.modulate
 	queue_free()
 
 func _on_animation_finished(anim_name):

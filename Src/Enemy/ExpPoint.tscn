@@ -1,17 +1,17 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Assets/gem1.png" type="Texture" id=1]
 [ext_resource path="res://Src/Enemy/ExpPoint.gd" type="Script" id=2]
 
 [node name="ExpPoint" type="Sprite"]
-scale = Vector2( 0.2, 0.2 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 0.3
 one_shot = true
 autostart = true
 
