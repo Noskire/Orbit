@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Src/Level/WorldEnvironment.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Src/UserInterface/PauseMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Src/Actor/Mage.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/floor.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Tilesets/floor.png" type="Texture" id=3]
 [ext_resource path="res://Src/Level/Gems.gd" type="Script" id=4]
 [ext_resource path="res://Src/Level/LevelTemplate.gd" type="Script" id=5]
-[ext_resource path="res://Src/UserInterface/PauseMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Assets/tower.png" type="Texture" id=7]
-[ext_resource path="res://Assets/queue.png" type="Texture" id=8]
-[ext_resource path="res://Assets/staff.png" type="Texture" id=9]
-[ext_resource path="res://Assets/magetower.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Tilesets/magetower.png" type="Texture" id=6]
+[ext_resource path="res://Assets/HUD/tower.png" type="Texture" id=7]
+[ext_resource path="res://Assets/HUD/queue.png" type="Texture" id=8]
+[ext_resource path="res://Assets/HUD/staff.png" type="Texture" id=9]
+[ext_resource path="res://Assets/UI/ui_theme.tres" type="Theme" id=11]
+[ext_resource path="res://Assets/UI/gems_theme.tres" type="Theme" id=12]
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor"
@@ -27,10 +28,49 @@
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="Animation" id=2]
+resource_name = "FadeOut"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gems/GameOver:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Gems/GameOver:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("Gems/PauseMenu")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "game_over"
+} ]
+}
+
 [node name="LevelTemplate" type="Node2D"]
 script = ExtResource( 5 )
-
-[node name="WorldEnvironment" parent="." instance=ExtResource( 1 )]
 
 [node name="TileMap" type="TileMap" parent="."]
 scale = Vector2( 3, 3 )
@@ -41,7 +81,7 @@ tile_data = PoolIntArray( -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -6
 [node name="MageTower" type="Sprite" parent="."]
 position = Vector2( 1920, 1080 )
 scale = Vector2( 4, 4 )
-texture = ExtResource( 10 )
+texture = ExtResource( 6 )
 
 [node name="Mage" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1920, 900 )
@@ -52,7 +92,7 @@ margin_left = 1795.0
 margin_top = 1230.0
 margin_right = 2045.0
 margin_bottom = 1330.0
-percent_visible = false
+theme = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -67,8 +107,9 @@ script = ExtResource( 4 )
 [node name="Gems" type="ItemList" parent="Gems"]
 margin_left = 30.0
 margin_top = 30.0
-margin_right = 440.0
-margin_bottom = 280.0
+margin_right = 460.0
+margin_bottom = 230.0
+theme = ExtResource( 12 )
 custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 allow_reselect = true
@@ -100,6 +141,7 @@ margin_left = -100.0
 margin_top = 30.0
 margin_right = -36.0
 margin_bottom = 330.0
+theme = ExtResource( 12 )
 custom_constants/separation = 25
 alignment = 1
 __meta__ = {
@@ -175,7 +217,51 @@ margin_right = 64.0
 margin_bottom = 84.0
 percent_visible = false
 
-[node name="PauseMenu" parent="Gems" instance=ExtResource( 6 )]
+[node name="AutoMode" type="Button" parent="Gems"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 30.0
+margin_top = -80.0
+margin_right = 165.0
+margin_bottom = -30.0
+focus_mode = 0
+theme = ExtResource( 12 )
+toggle_mode = true
+pressed = true
+text = "AutoMode"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="Gems"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -88.0
+margin_top = 30.0
+margin_right = 88.0
+margin_bottom = 117.0
+theme = ExtResource( 11 )
+text = "SCORE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseMenu" parent="Gems" instance=ExtResource( 1 )]
+
+[node name="GameOver" type="ColorRect" parent="Gems"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="AnimationPlayer" parent="."]
+pause_mode = 2
+anims/FadeOut = SubResource( 2 )
 
 [connection signal="timeout" from="Respawn" to="." method="_on_Respawn_timeout"]
 [connection signal="item_selected" from="Gems/Gems" to="Gems" method="_on_Gems_selected"]
+[connection signal="button_up" from="Gems/AutoMode" to="Mage" method="_on_AutoMode_button_up"]

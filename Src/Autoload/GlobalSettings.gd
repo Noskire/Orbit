@@ -3,6 +3,10 @@ extends Node
 signal bloom_toggled(value)
 signal brightness_updated(value)
 
+var playerName = ""
+var token = ""
+var score = 0
+
 func toggle_fullscreen(value):
 	OS.window_fullscreen = value
 	Save.game_data.fullscreen_on = value

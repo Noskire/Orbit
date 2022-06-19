@@ -1,7 +1,9 @@
 extends KinematicBody2D
 
+onready var sceneTree: = get_tree()
 onready var node: Node2D = get_node("Node2d") 
 onready var spawn: Position2D = get_node("Node2d/SpawnPoint") 
+onready var arrow: Sprite = get_node("Node2d/Arrow")
 onready var anim: AnimationPlayer = get_node("AnimationPlayer")
 onready var towerHP: ProgressBar = get_parent().get_node("TowerHP")
 onready var orb_path = preload("res://Src/Actor/Orb.tscn")
@@ -17,6 +19,7 @@ var speed = 200
 var rot_speed = PI
 var buff = 0
 var facing = 0
+var automode = true
 
 func _ready():
 	currentTime = 0
@@ -33,10 +36,48 @@ func _physics_process(delta: float) -> void:
 		buff -= delta
 
 	var enemies = get_tree().get_nodes_in_group("Enemies")
-	if not enemies.empty():
-		#direction = (enemies[0].get_global_position() - get_global_position()).normalized()
-		#look_at(get_global_position() + direction)
-		var angle = (enemies[0].get_global_position() - node.get_global_position()).angle()
+	if not automode:
+		var angle = Input.get_action_strength("clockwise") - Input.get_action_strength("anticlockwise")
+		angle = angle * rot_speed * delta
+		node.global_rotation += angle
+		angle = node.global_rotation
+		if angle < -1.5:
+			facing = 2
+		elif angle < 0:
+			facing = 3
+		elif angle < 1.5:
+			facing = 0
+		elif angle < 3:
+			facing = 1
+		if Input.is_action_just_pressed("shoot") and anim.current_animation == "Idle":
+			match facing:
+				0:
+					anim.play("Shoot0")
+				1:
+					anim.play("Shoot1")
+				2:
+					anim.play("Shoot2")
+				3:
+					anim.play("Shoot3")
+	elif not enemies.empty():
+		var loop = 0
+		var dist
+		var min_dist
+		var closer_enemy = 0
+		
+		for e in enemies:
+			if loop == 0:
+				var pos = e.get_global_position() - node.get_global_position()
+				min_dist = abs(pos.x) + abs(pos.y)
+			else:
+				var pos = e.get_global_position() - node.get_global_position()
+				dist = abs(pos.x) + abs(pos.y)
+				if dist < min_dist:
+					min_dist = dist
+					closer_enemy = loop
+			loop += 1
+		
+		var angle = (enemies[closer_enemy].get_global_position() - node.get_global_position()).angle()
 		var grot = node.global_rotation
 		var angle_delta = rot_speed * delta
 		angle = lerp_angle(grot, angle, 1.0)
@@ -82,6 +123,7 @@ func update_staff(gem_id: int):
 				color = "#806043"
 			3:
 				color = "#a6e7ff"
+	arrow.modulate = color
 
 func update_tower(gem_id: int):
 	if gem_id != -1:
@@ -123,8 +165,16 @@ func shoot() -> void:
 
 func take_damage(value) -> void:
 	towerHP.value -= value
+	if towerHP.value <= 0:
+		if GlobalSettings.score < get_parent().get_node("Gems").score:
+			GlobalSettings.score = get_parent().get_node("Gems").score
+		get_parent().get_node("GameOver").play("FadeOut")
+		sceneTree.paused = true
 
 func _on_animation_finished(anim_name):
 	if anim_name != "Idle":
 		shoot()
 		anim.play("Idle")
+
+func _on_AutoMode_button_up():
+	automode = not automode

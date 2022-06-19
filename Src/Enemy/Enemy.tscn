@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Src/Enemy/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://Assets/enemy_wasp.png" type="Texture" id=2]
-[ext_resource path="res://Assets/wet.png" type="Texture" id=3]
-[ext_resource path="res://Assets/onfire.png" type="Texture" id=4]
-[ext_resource path="res://Assets/slow.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Tilesets/enemy_wasp.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Tilesets/wet.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Tilesets/onfire.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Tilesets/slow.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 103.853, 81.8828 )
@@ -48,9 +48,10 @@ shape = SubResource( 1 )
 
 [node name="HP" type="ProgressBar" parent="."]
 margin_left = -280.0
-margin_top = -65.0
-margin_right = -250.0
-margin_bottom = 65.0
+margin_top = 65.0
+margin_right = -150.0
+margin_bottom = 95.0
+rect_rotation = -90.0
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false

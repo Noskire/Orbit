@@ -2,7 +2,6 @@ extends Control
 
 onready var playButton = $Margin/VBox/Menu/Play
 onready var settingsMenu = $SettingsMenu
-
 export(String, FILE) var scenePath: = ""
 
 func _ready():
@@ -21,5 +20,7 @@ func _on_Quit_button_up():
 	get_tree().quit()
 
 func _on_Link_pressed():
-	OS.shell_open("https://noskire.itch.io/")
-	
+	var err = OS.shell_open("https://noskire.itch.io/")
+	if err != OK:
+		print("Error Play Button")
+	pass

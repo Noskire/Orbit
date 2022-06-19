@@ -10,7 +10,7 @@ onready var masterValue = $Tabs/STOPTIONS/Margin/Grid/HBox2/VolValue
 onready var masterSlider = $Tabs/STOPTIONS/Margin/Grid/HBox2/VolSlider
 onready var languageBtn = $Tabs/STOPTIONS/Margin/Grid/Languages
 onready var keyGrid = $Tabs/STKEYS/Margin/Grid
-onready var btnScript = load("res://src/UserInterface/KeyButton.gd")
+onready var btnScript = load("res://Src/UserInterface/KeyButton.gd")
 
 var buttons = {}
 var keybinds

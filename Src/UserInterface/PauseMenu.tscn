@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/ui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://src/UserInterface/PauseMenu.gd" type="Script" id=2]
-[ext_resource path="res://src/UserInterface/SettingsMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/UI/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Src/UserInterface/PauseMenu.gd" type="Script" id=2]
+[ext_resource path="res://Src/UserInterface/SettingsMenu.tscn" type="PackedScene" id=3]
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
@@ -15,11 +15,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 mainenu_scene_path = "res://Src/Screen/MainScreen.tscn"
+scenePath = "res://Src/Screen/EndScreen.tscn"
 
 [node name="PauseOverlay" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.12549, 0.235294, 0.337255, 0.294118 )
+color = Color( 0.0588235, 0.0588235, 0.105882, 0.294118 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

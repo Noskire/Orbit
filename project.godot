@@ -28,6 +28,7 @@ config/icon="res://icon.png"
 
 GlobalSettings="*res://Src/Autoload/GlobalSettings.gd"
 Save="*res://Src/Autoload/Save.gd"
+Music="*res://Src/Autoload/Music.tscn"
 
 [display]
 
@@ -45,6 +46,21 @@ pause={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
+clockwise={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+anticlockwise={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+shoot={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -56,6 +72,10 @@ pause={
 
 translations=PoolStringArray( "res://Translation.en.translation", "res://Translation.pt.translation" )
 locale_filter=[ 0, [ "en", "pt" ] ]
+translation_remaps={
+"res://Assets/UI/OrbTuto1.png": PoolStringArray( "res://Assets/UI/OrbTuto1pt.png:pt" ),
+"res://Assets/UI/OrbTuto2.png": PoolStringArray( "res://Assets/UI/OrbTuto2pt.png:pt" )
+}
 
 [physics]
 

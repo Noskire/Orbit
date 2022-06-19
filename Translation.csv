@@ -1,5 +1,5 @@
 keys,en,pt
-TITLE,Title,Título
+TITLE,The Last Bastion,O Último Bastião
 NEWGAME,New Game,Novo Jogo
 SETTINGS,Settings,Opções
 QUIT,Quit,Sair
@@ -18,9 +18,9 @@ STMUSIC,Master Volume,Volume Principal
 STKEYS,Keybind,Controles
 STRESET,Reset Settings,Redefinir Teclas
 STSAVE,Save Settings,Salvar Teclas
-left,Left,Esquerda
-right,Right,Direita
-jump,Jump,Pular
+anticlockwise,Anticlockwise,Anti-horário
+clockwise,Clockwise,Horário
+shoot,Shoot,Atirar
 pause,Pause,Pausar
 STKUNASSIGNED,Unassigned,Sem Tecla
 STKPRESSKEY,Press Any Key:,Aperte uma Tecla:
@@ -29,3 +29,11 @@ RESUME,Resume,Retomar
 RESTART,Restart,Reiniciar
 MAINMENU,Main Menu,Menu Principal
 SEEMOREIN,See more in:,Veja mais em:
+SCORE,Score: ,Pontuação: 
+CONGRATS,"You resisted,\nbut it wasn't enough!","Você resistiu, mas\nnão foi o suficiente!"
+PUTNAME,"Please, type your name:","Por favor, digite seu nome:"
+SENDSCORE,Send Score,Enviar Pontuação
+SUBMITTING,Submitting...,Enviando...
+GETRANK,Getting your\nposition...,Obtendo sua\nposição...
+POSITION,Your Position:,Sua posição:
+GETBOARD,Getting the\nLeaderboard...,Obtendo o\nRanking...

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://src/Screen/MainScreen.gd" type="Script" id=1]
-[ext_resource path="res://Assets/ui_theme.tres" type="Theme" id=2]
-[ext_resource path="res://src/UserInterface/SettingsMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Src/Screen/MainScreen.gd" type="Script" id=1]
+[ext_resource path="res://Assets/UI/ui_theme.tres" type="Theme" id=2]
+[ext_resource path="res://Src/UserInterface/SettingsMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/UI/noBG-Wildling-Wallpaper 1080.png" type="Texture" id=4]
 
 [node name="MainScreen" type="Control"]
 anchor_right = 1.0
@@ -12,12 +13,12 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-scenePath = "res://Src/Level/LevelTemplate.tscn"
+scenePath = "res://Src/Screen/Tutorial.tscn"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.180392, 0.188235, 0.215686, 1 )
+color = Color( 0.0588235, 0.0588235, 0.105882, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -109,6 +110,7 @@ size_flags_vertical = 3
 text = "QUIT"
 
 [node name="Credits" type="Label" parent="Margin/VBox"]
+visible = false
 margin_top = 478.0
 margin_right = 590.0
 margin_bottom = 565.0
@@ -118,15 +120,15 @@ __meta__ = {
 }
 
 [node name="Creator" type="Label" parent="Margin/VBox"]
-margin_top = 605.0
+margin_top = 478.0
 margin_right = 590.0
-margin_bottom = 692.0
+margin_bottom = 565.0
 text = "CREATOR"
 
 [node name="VBox" type="VBoxContainer" parent="Margin/VBox"]
-margin_top = 732.0
+margin_top = 605.0
 margin_right = 590.0
-margin_bottom = 886.0
+margin_bottom = 759.0
 custom_constants/separation = -20
 
 [node name="Label" type="Label" parent="Margin/VBox/VBox"]
@@ -139,6 +141,15 @@ margin_top = 67.0
 margin_right = 590.0
 margin_bottom = 154.0
 text = "https://noskire.itch.io/"
+
+[node name="noBG-Wildling-Wallpaper 1080" type="Sprite" parent="."]
+position = Vector2( 1600, 900 )
+scale = Vector2( 0.33, 0.33 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_editor_description_": "
+"
+}
 
 [node name="SettingsMenu" parent="." instance=ExtResource( 3 )]
 

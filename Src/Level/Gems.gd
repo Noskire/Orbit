@@ -5,16 +5,17 @@ onready var player = get_parent().get_node("Mage")
 # types {Fire, Water, Earth, Air}
 # sizes {Small, Medium, Large}
 onready var gems_paths = [
-	preload("res://Assets/gem1.png"), preload("res://Assets/gem2.png"),
-	preload("res://Assets/gem3.png"), preload("res://Assets/gem4.png")
+	preload("res://Assets/HUD/gem1.png"), preload("res://Assets/HUD/gem2.png"),
+	preload("res://Assets/HUD/gem3.png"), preload("res://Assets/HUD/gem4.png")
 	]
 onready var gems: ItemList = get_node("Gems")
 onready var choosedGem: TextureRect = get_node("ChoosedGem")
 onready var slot1: TextureRect = get_node("Slots/Slot1/Gem")
 onready var slot2: TextureRect = get_node("Slots/Slot2/Gem")
 onready var slot3: TextureRect = get_node("Slots/Slot3/Gem")
-onready var slot1Default = preload("res://Assets/staff.png")
-onready var slot2Default = preload("res://Assets/tower.png")
+onready var slot1Default = preload("res://Assets/HUD/staff.png")
+onready var slot2Default = preload("res://Assets/HUD/tower.png")
+onready var score_label: Label = get_node("Score")
 
 var gem_id
 var slot1Gem_id
@@ -27,6 +28,9 @@ var orbs_collected = []
 var diff_types = 4
 var diff_sizes = 4
 var mouse_over = false
+var score = 0
+var all_gems = 0
+var time = 0
 
 func _ready():
 	for x in diff_types:
@@ -46,6 +50,7 @@ func _ready():
 					gems.set_item_icon_modulate(idx, "#a6e7ff")
 
 func _physics_process(delta: float) -> void:
+	time += delta
 	var val = slot1.get_node("Bar").value
 	if val > 0:
 		slot1.get_node("Bar").set_value(val - 0.1)
@@ -65,21 +70,25 @@ func _physics_process(delta: float) -> void:
 		slot2.modulate = "#ffffff"
 		slot2.get_node("Bar").set_value(0)
 		player.update_tower(-1)
+	
+	score = int(time) + all_gems
+	score_label.set_text(str(tr("SCORE"), score))
 
 func get_orb(value, type) -> void:
+	all_gems += value
 	orbs_collected[type][0] += value
 	gems.set_item_text((type * diff_sizes), str(orbs_collected[type][0]))
-	if orbs_collected[type][0] >= 10:
+	while orbs_collected[type][0] >= 10:
 		orbs_collected[type][0] -= 10
 		orbs_collected[type][1] += 1
 		gems.set_item_text((type * diff_sizes), str(orbs_collected[type][0]))
 		gems.set_item_text((type * diff_sizes + 1), str(orbs_collected[type][1]))
-		if orbs_collected[type][1] >= 10:
+		while orbs_collected[type][1] >= 10:
 			orbs_collected[type][1] -= 10
 			orbs_collected[type][2] += 1
 			gems.set_item_text((type * diff_sizes + 1), str(orbs_collected[type][1]))
 			gems.set_item_text((type * diff_sizes + 2), str(orbs_collected[type][2]))
-			if orbs_collected[type][2] >= 10:
+			while orbs_collected[type][2] >= 10:
 				orbs_collected[type][2] -= 10
 				orbs_collected[type][3] += 1
 				gems.set_item_text((type * diff_sizes + 2), str(orbs_collected[type][2]))

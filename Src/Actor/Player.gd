@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 onready var spawn: Position2D = get_node("SpawnPoint") 
 onready var anim: AnimationPlayer = get_node("AnimationPlayer")
-onready var projectile_path = preload("res://Src/Actor/Orb.tscn")
+onready var projectile_path = preload("res://Assets/Tilesets/orb.png")
 
 # Player Stats
 export var speed: = Vector2(400.0, 400.0)

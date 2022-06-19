@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/OrbitLoop.wav-e2ae1070b02e14d0b3c4d79f0d0c567f.sample"
+
+[deps]
+
+source_file="res://Assets/Music/OrbitLoop.wav"
+dest_files=[ "res://.import/OrbitLoop.wav-e2ae1070b02e14d0b3c4d79f0d0c567f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

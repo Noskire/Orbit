@@ -3,10 +3,10 @@ extends Node2D
 onready var enemy_path = preload("res://Src/Enemy/Enemy.tscn")
 onready var timer: Timer = get_node("Respawn")
 onready var slot3 = get_node("Gems/Slots/Slot3/Gem")
-onready var slot3Default = preload("res://Assets/queue.png")
-onready var wasp = preload("res://Assets/enemy_wasp.png")
-onready var golem = preload("res://Assets/enemy_golem.png")
-onready var phantom = preload("res://Assets/enemy_phantom.png")
+onready var slot3Default = preload("res://Assets/HUD/queue.png")
+onready var wasp = preload("res://Assets/Tilesets/enemy_wasp.png")
+onready var golem = preload("res://Assets/Tilesets/enemy_golem.png")
+onready var phantom = preload("res://Assets/Tilesets/enemy_phantom.png")
 
 var rand: Vector2
 var wave
@@ -15,9 +15,10 @@ var addStrength
 var addType
 
 func _ready():
+	
 	randomize()
 	wave = 0
-	num_enemies = 0
+	num_enemies = 2
 	timer.start()
 
 func update_strength(gem_id: int):

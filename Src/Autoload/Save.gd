@@ -4,6 +4,9 @@ const SAVEFILE = "user://saveFile.save"
 const SAVEKEYS = "user://keyBinds.ini"
 
 var standard_keybinds = {
+	"anticlockwise": 65,
+	"clockwise": 68,
+	"shoot": 32,
 	"pause": 82
 }
 

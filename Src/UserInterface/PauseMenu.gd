@@ -5,6 +5,7 @@ onready var pauseOverlay: ColorRect = get_node("PauseOverlay")
 onready var settingsMenu = get_node("SettingsMenu")
 
 export(String, FILE) var mainenu_scene_path: = ""
+export(String, FILE) var scenePath: = ""
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
@@ -16,6 +17,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			visible = true
 			$PauseOverlay/VBox/Resume.grab_focus()
 		sceneTree.set_input_as_handled()
+
+func game_over():
+	sceneTree.paused = false
+	var err = get_tree().change_scene(scenePath)
+	if err != OK:
+		print("Error Level to End Screen")
 
 func _on_Resume_button_up():
 	sceneTree.paused = false
